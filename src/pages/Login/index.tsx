@@ -44,8 +44,8 @@ const LoginScreen = () => {
 
   const navigate = useNavigate();
 
-  const onSubmit = async () => {
-
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
       try {
         const { user } = await createUserWithEmailAndPassword(
           auth,
@@ -321,7 +321,7 @@ const LoginScreen = () => {
                 type="submit"
                 onClick={onSubmit}
                 className="btn bt"
-                value="Recuperar"
+                value="cadastrar"
               />
               
             </form>
