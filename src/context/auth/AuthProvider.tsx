@@ -21,7 +21,7 @@ function AuthProvider(Prop: Props) {
 
       try {
         const response = await axios.get(
-          `https://api-rust-six.vercel.app/usuario/get${uid}`
+          `https://apisisges.vercel.app/usuario/get${uid}`
         );
         if (response) {
           setUser(

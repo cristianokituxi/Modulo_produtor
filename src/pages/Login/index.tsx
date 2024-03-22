@@ -19,12 +19,21 @@ import Spinner from "../../components/Spinner";
 import "./style.scss";
 import "./auth.css";
 import { Box, Link } from "@mui/material";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../FirebaseConfig";
+import axios from "axios";
 
 const LoginScreen = () => {
   // const [show, setShow] = useState(false);
   const [username, setUsername] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setname] = useState("");
+  const [sobrenome, setSobrenome] = useState("");
+  const [login, setlogin] = useState("");
+  const [passwordcad, setPasswordcad] = useState("");
+  const [repetpassword, setrepetPasswordcad] = useState("");
+
   // const [errorMessage, setErrorMessage] = useState("");
   const [loading, setloading] = useState(false);
   // const [errorMessageField, setErrorMessageField] = useState("");
@@ -35,7 +44,35 @@ const LoginScreen = () => {
 
   const navigate = useNavigate();
 
-  // const handleShow = () => setShow(true);
+  const onSubmit = async () => {
+
+      try {
+        const { user } = await createUserWithEmailAndPassword(
+          auth,
+          login,
+          passwordcad
+        );
+        const { uid } = user;
+        
+        if(uid){
+          const resp = await axios.post("https://apisisges.vercel.app/usuario/add", {
+          nome: name,
+          sobrenome: sobrenome,
+          login:login,
+          senha: passwordcad,
+          repete_senha: repetpassword,
+          auth_uid: uid 
+
+          });
+                if (resp) {
+            toast.success(resp.data);
+          }
+          
+        }
+      } catch (error) {
+        console.error(error);
+      }
+      }
 
   const handleSignIn = async (e: any) => {
     e.preventDefault();
@@ -194,37 +231,15 @@ const LoginScreen = () => {
                   cursor: "pointer",
                 }}
               >
-                Esqueceu a senha?
+              Faça seu cadastrado
               </Link>
               <Box sx={{ typography: 'body1' }}>
-             <Link href="/cadastro">Faça seu cadastrado</Link>
            </Box>
             </form>
             <form
-              // onSubmit={handleSignUpSubmit}
+            //  onSubmit={handleSignUpSubmit}
               className="sign-up-form"
             >
-              <Alert
-                variant="outlined"
-                severity="info"
-                style={{ fontFamily: "poppins" }}
-                className="mt-2"
-              >
-                Para recuperar sua senha <br /> basta digitar o e-mail
-                cadastrado . <br /> será enviado um link de recuperação de senha
-                no e-mail.
-              </Alert>
-
-              {/* <div className="input-field">
-                <i className="fas fa-user" />
-                <input
-                  // onChange={handleSignUpData}
-                  // value={data.name}
-                  name="name"
-                  type="text"
-                  placeholder="Name"
-                />
-              </div> */}
               <div className="input-field">
                 <img
                   src={img4}
@@ -233,43 +248,82 @@ const LoginScreen = () => {
                   style={{ marginTop: "10px" }}
                 />
                 <input
-                  value={userEmail}
-                  onChange={(e) => setUserEmail(e.target.value)}
+                  value={name}
+                  onChange={(e) => setname(e.target.value)}
+                  name="Nome"
+                  type="text"
+                  placeholder="Digite seu nome"
+                />
+              </div>
+              <div className="input-field">
+                <img
+                  src={img4}
+                  alt=""
+                  height={30}
+                  style={{ marginTop: "10px" }}
+                />
+                <input
+                  value={sobrenome}
+                  onChange={(e) => setSobrenome(e.target.value)}
+                  name="Sobrenome"
+                  type="text"
+                  placeholder="Digite seu sobrenome"
+                />
+              </div>
+              <div className="input-field">
+                <img
+                  src={img4}
+                  alt=""
+                  height={30}
+                  style={{ marginTop: "10px" }}
+                />
+                <input
+                  value={login}
+                  onChange={(e) => setlogin(e.target.value)}
                   name="email"
                   type="email"
                   placeholder="Digite seu e-mail"
                 />
               </div>
-              {/* <div className="input-field">
-                <i className="fas fa-phone" />
-                <input type="text" name="number" placeholder="Contact Number" />
-              </div>
               <div className="input-field">
-                <i className="fas fa-lock" />
+                <img
+                  src={img4}
+                  alt=""
+                  height={30}
+                  style={{ marginTop: "10px" }}
+                />
                 <input
-                  // onChange={handleSignUpData}
-                  // value={data.password}
-                  name="password"
-                  type="password"
-                  placeholder="Password"
+                  value={passwordcad}
+                  onChange={(e) => setPasswordcad(e.target.value)}
+                  name="senha"
+                  type="senha"
+                  placeholder="Digite palavra passe"
                 />
               </div>
+
               <div className="input-field">
-                <i className="fas fa-lock" />
-                <input
-                  // onChange={handleSignUpData}
-                  // value={data.confirmPassword}
-                  type="password"
-                  name="confirmPassword"
-                  placeholder="Confirm Password"
+                <img
+                  src={img4}
+                  alt=""
+                  height={30}
+                  style={{ marginTop: "10px" }}
                 />
-              </div> */}
+                <input
+                  value={repetpassword}
+                  onChange={(e) => setrepetPasswordcad(e.target.value)}
+                  name="repetepalavrapasse"
+                  type="passeword"
+                  placeholder="repete a palavra passe"
+                />
+              </div>
+              
               <input
                 type="submit"
-                onClick={RecoverPasswordFunc}
+                onClick={onSubmit}
                 className="btn bt"
                 value="Recuperar"
               />
+              
             </form>
           </div>
         </div>

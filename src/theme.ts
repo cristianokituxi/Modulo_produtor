@@ -5,13 +5,7 @@ import { ptBR as DataGridLocale } from "@mui/x-data-grid"
 export const theme = createTheme(
   {
     palette: {
-      
-      primary: {
-        main: '#365711'
-      },
-      success: {
-        main: '#4caf50'
-      }
+      mode: "dark",
     },
   },
   DataGridLocale,

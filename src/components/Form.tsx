@@ -56,7 +56,7 @@ const Forms: React.FC = () => {
     <form >
       <TextField
         name="segmento"
-        label="Digite a area do plantio"
+        label="Digite o segmento"
         value={formValues.segmento}
         onChange={handleInputChange}
         fullWidth
@@ -72,7 +72,7 @@ const Forms: React.FC = () => {
       />
     </form>
      <Stack className='mt-3'>
-     <Button variant="contained" onClick={handleSubmit} >Planejar</Button>
+     <Button variant="contained" onClick={handleSubmit} >Cotar</Button>
    </Stack>
    </>
   )

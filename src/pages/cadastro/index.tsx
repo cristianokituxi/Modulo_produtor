@@ -24,7 +24,6 @@ const CadastroForm: React.FC = () => {
           label="Nome"
           fullWidth
           margin="normal"
-          variant="outlined"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
         />
@@ -32,7 +31,6 @@ const CadastroForm: React.FC = () => {
           label="E-mail"
           fullWidth
           margin="normal"
-          variant="outlined"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -41,7 +39,6 @@ const CadastroForm: React.FC = () => {
           label="Senha"
           fullWidth
           margin="normal"
-          variant="outlined"
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
         />
